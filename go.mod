@@ -1,0 +1,3 @@
+module github.com/BaldurDevs/go_clean_architecture_templatego_clean_architecture_template
+
+go 1.20
