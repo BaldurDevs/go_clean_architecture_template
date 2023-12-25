@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/BaldurDevs/go_clean_architecture_templatego_clean_architecture_template/internal/entrypoint/handler/rest"
 	"log"
 
 	"github.com/BaldurDevs/baldur_go-library/pkg/goutils/configsloader"
@@ -10,9 +11,10 @@ import (
 
 func main() {
 
-	loader := configsloader.ConfigsLoaderFactory()
-	err := loader.LoadFile(".env")
+	loader := configsloader.ConfigsEnvLoaderFactory()
+	err := loader.LoadFile()
 	if err != nil {
+		log.Fatalf("error loading env file: %v", err)
 		return
 	}
 
@@ -26,6 +28,9 @@ func run() error {
 
 	pingHandler := baserest.NewPingHandler()
 	pingHandler.RegisterRoutes(router)
+
+	helloHandler := rest.HelloHandlerFactory()
+	helloHandler.RegisterRoutes(router)
 
 	if err := router.Run(); err != nil {
 		return err

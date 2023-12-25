@@ -5,13 +5,14 @@ import (
 	"github.com/BaldurDevs/baldur_go-library/pkg/http/baserest"
 	"github.com/BaldurDevs/go_clean_architecture_templatego_clean_architecture_template/internal/entrypoint/handler/contracts"
 	"github.com/gin-gonic/gin"
+	"log"
 )
 
 func HelloHandlerFactory() baserest.Handler {
-	return NewHelloHandler()
+	return newHelloHandler()
 }
 
-func NewHelloHandler() baserest.Handler {
+func newHelloHandler() baserest.Handler {
 	return &helloHandler{}
 }
 
@@ -20,18 +21,14 @@ type helloHandler struct {
 }
 
 func (handler *helloHandler) RegisterRoutes(c *gin.Engine) {
-	c.GET(basePath+"hello", handler.helloOperation)
+	c.POST(basePath+"hello", handler.helloOperation)
 }
 
-func (handler *helloHandler) helloOperation(c *gin.Context) {
+func (handler *helloHandler) helloOperation(_ *gin.Context) {
 
 }
 
-func (handler *helloHandler) getDataFromRequest(c *gin.Context) (*contracts.HelloRequest, error) {
-	helloRequestContract := &contracts.HelloRequest{}
-	if err := c.BindJSON(helloRequestContract); err != nil {
-		return nil, err
-	}
-
-	return helloRequestContract, nil
+func (handler *helloHandler) getDataFromRequest(_ *gin.Context) (*contracts.HelloRequest, error) {
+	log.Fatalf("%s", "Implement me...")
+	return nil, nil
 }
